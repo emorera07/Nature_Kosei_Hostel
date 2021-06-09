@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Iniciar sesión {% endblock %}
+{% block content %}
+<section id="user"> 
+    <h2>Iniciar Sesión</h2>
+    <p>Bienvenido, por favor ingresar</p>
+    <form method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit">Login</button>
+    </form>
+    
+    <hr />
+    <a href='/register'>Registrar usuario</a>
+</section>     
+{% endblock %}

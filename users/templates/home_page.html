@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %} Welcome {% endblock %}
+{% block content %}
+<section id="home_page">
+    <h2>Nature Kosei Hostel</h2>
+    <p>Bienvenido <b>{{request.user.username}}</b>.</p>
+    <p>
+        <a href="/appointments">Calendario de Citas</a>
+
+    </p>
+    <a href="/logout">Cerrar sesión</a>
+</section>
+{% endblock %}
