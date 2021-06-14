@@ -25,7 +25,8 @@ SECRET_KEY = 'evi_p#@=ud80^p3%659-li(^_51sq2ce%juo9fs7ftqdhtkr$6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1']
+
 
 
 # Application definition
@@ -70,7 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Nature_Kosei_Hostel.wsgi.application'
-
+AUTH_USER_MODEL = 'users.User'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

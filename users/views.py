@@ -4,8 +4,14 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as do_logout
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm #,UserCreationForm
 from django.contrib.auth import login as do_login
+#from users.models import User #Nuestro modelo de usuarios personalizado
+from users.admin import RegisterForm
+from users.models import User
+
+#from django.contrib.auth import get_user_model
+
 
 # Create your views here.
 def home_page(request):
@@ -16,6 +22,7 @@ def home_page(request):
     return redirect('/login')
 
 def login(request):
+    form = User()
     # Creamos el formulario de autenticación vacío
     form = AuthenticationForm()
     if request.method == "POST":
@@ -49,26 +56,27 @@ def logout(request):
 
 def register(request):
     # Creamos el formulario de autenticación vacío
-    form = UserCreationForm()
+    form = RegisterForm()
+    user = None
     if request.method == "POST":
+
         # Añadimos los datos recibidos al formulario
-        form = UserCreationForm(data = request.POST)
+        form = RegisterForm(data = request.POST)
 
         # Si el formulario es válido...
         if form.is_valid():
-
-            # Creamos la nueva cuenta de usuario
+        # Creamos la nueva cuenta de usuario
             user = form.save()
-
             # Si el usuario se crea correctamente
-            if user is not None:
-                # Hacemos el login manualmente
-                do_login(request, user)
-                # Y le redireccionamos a la portada
-                return redirect('/')
+        if user is not None:
+            # Hacemos el login manualmente
+            do_login(request, user)
+            # Y le redireccionamos a la portada
+            return redirect('/')
     # Si queremos borramos los campos de ayuda
-    form.fields['username'].help_text = None
+    #form.fields['Username'].help_text = None
     form.fields['password1'].help_text = None
     form.fields['password2'].help_text = None
+
     # Si llegamos al final renderizamos el formulario
     return render(request, "register.html", {'form': form})
