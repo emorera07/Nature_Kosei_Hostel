@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Calendar {% endblock %}
+{% block content %}
+<section id="calendar">
+<div class="enlace1"><a href='/home_page'>Home</a></div>
+{{ calendar }}
+<div class="enlace1"><a href='NewAppointments'>Nueva reservación</a></div>
+<div class="enlace1"><a href='EditAppointments'>Editar reservación</a></div>
+</section>
+
+{% endblock %}
