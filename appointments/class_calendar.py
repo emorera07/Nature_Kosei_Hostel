@@ -24,7 +24,7 @@ class Calendar(HTMLCalendar):
             else:
                 day_event += f'<li> reservado </li>'
         if day != 0:
-            return f"<td><span class='date'>{day}</span><ul> {day_event} </ul></td>"
+            return f"<td><span class='date'>{day}</span><ul class='citas'> {day_event} </ul></td>"
         return '<td></td>'
 
 	# formats a week as a tr
