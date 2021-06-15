@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from calendar import HTMLCalendar
 from .models import Event
 from django.http import HttpResponse
+from users.models import User 
 
 from django.shortcuts import render
 
@@ -19,10 +20,13 @@ class Calendar(HTMLCalendar):
         day_event = ''
         #user = request.GET['user']
         for event in events_per_day:
-            if event.user == 'admin': #or event.user == user:
-                day_event += f'<li> {event.user} </li>'
+            if User.is_staff:
+               day_event += f'<li> {event.user} </li>'
             else:
-                day_event += f'<li> reservado </li>'
+                if event.user == User.username:
+                    day_event += f'<li> {event.user} </li>' 
+                else:
+                    day_event += f'<li> Reservado </li>'
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul class='citas'> {day_event} </ul></td>"
         return '<td></td>'

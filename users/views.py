@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm #,UserCreationForm
 from django.contrib.auth import login as do_login
 #from users.models import User #Nuestro modelo de usuarios personalizado
-from users.admin import RegisterForm
+from users.admin import RegisterForm, RegisterStaffForm
 from users.models import User
 
 #from django.contrib.auth import get_user_model
@@ -80,3 +80,31 @@ def register(request):
 
     # Si llegamos al final renderizamos el formulario
     return render(request, "register.html", {'form': form})
+
+
+def registerStaff(request):
+    # Creamos el formulario de autenticación vacío
+    form = RegisterStaffForm()
+    user = None
+    if request.method == "POST":
+
+        # Añadimos los datos recibidos al formulario
+        form = RegisterStaffForm(data = request.POST)
+
+        # Si el formulario es válido...
+        if form.is_valid():
+        # Creamos la nueva cuenta de usuario
+            user = form.save()
+            # Si el usuario se crea correctamente
+        if user is not None:
+            # Hacemos el login manualmente
+            do_login(request, user)
+            # Y le redireccionamos a la portada
+            return redirect('/')
+    # Si queremos borramos los campos de ayuda
+    #form.fields['Username'].help_text = None
+    form.fields['password1'].help_text = None
+    form.fields['password2'].help_text = None
+
+    # Si llegamos al final renderizamos el formulario
+    return render(request, "registerStaff.html", {'form': form})

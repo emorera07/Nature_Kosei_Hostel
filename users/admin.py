@@ -8,6 +8,26 @@ from django.contrib.auth.forms import UserCreationForm
 class RegisterForm(UserCreationForm):
     username = forms.CharField(label = 'Nombre de Usuario') 
     email = forms.EmailField(label = 'email')
+    #is_staff = forms.BooleanField(label = 'is_staff',required=False)
+
+    class Meta: 
+        model = User
+        fields = ('username', 'email',)
+        
+
+    def save(self, commit=True):
+        User = None 
+        User = super(RegisterForm, self).save(commit=False) 
+        User.email = self.cleaned_data['email']
+        User.is_staff = False #self.cleaned_data['is_staff']
+        if commit: 
+            User.save() 
+        return User 
+
+
+class RegisterStaffForm(UserCreationForm):
+    username = forms.CharField(label = 'Nombre de Usuario') 
+    email = forms.EmailField(label = 'email')
     is_staff = forms.BooleanField(label = 'is_staff',required=False)
 
     class Meta: 
@@ -17,7 +37,7 @@ class RegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         User = None 
-        User = super(RegisterForm, self).save(commit=False) 
+        User = super(RegisterStaffForm, self).save(commit=False) 
         User.email = self.cleaned_data['email']
         User.is_staff = self.cleaned_data['is_staff']
         if commit: 

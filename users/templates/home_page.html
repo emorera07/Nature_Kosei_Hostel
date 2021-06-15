@@ -8,6 +8,9 @@
         <a href="/appointments">Calendario de Citas</a>
 
     </p>
+    {% if request.user.is_staff %}
+    <a href="/registerStaff">Registrar usuario Staff</a>
+    {% endif %}
     <a href="/logout">Cerrar sesión</a>
 </section>
 {% endblock %}

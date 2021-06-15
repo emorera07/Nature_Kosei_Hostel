@@ -54,6 +54,6 @@ class User(AbstractUser):
         # Simplest possible answer: Yes, always
         return True
 
-    #@property
-    #def is_staff(self):
-     #   return self.staff
+    @property
+    def check_is_staff(self):
+       return self.is_staff
